@@ -152,7 +152,43 @@ console.log("🔐 DES 加密后 (Base64):", encryptedData);
 var decryptedData = desDecrypt(encryptedData, desKey, desIv);
 console.log("🔓 DES 解密后:", decryptedData);
 
+const JSEncrypt = require('jsencrypt');
 
+// 1. 创建实例
+const encryptor = new JSEncrypt();
+
+// 2. 设置公钥（实际项目中应该从后端获取）
+const publicKey = '-----BEGIN PUBLIC KEY-----\n你的公钥内容\n-----END PUBLIC KEY-----';
+
+// 3. 加密函数
+function encryptData(data) {
+  encryptor.setPublicKey(publicKey);
+  return encryptor.encrypt(data);
+}
+
+// 使用示例
+const encrypted = encryptData('要加密的数据');
+console.log(encrypted);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 不常用
 const NodeRSA = require('node-rsa');
 
 // 1. 生成 RSA 密钥对（默认 2048 位）
