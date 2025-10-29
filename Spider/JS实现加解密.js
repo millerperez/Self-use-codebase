@@ -171,6 +171,64 @@ const encrypted = encryptData('要加密的数据');
 console.log(encrypted);
 
 
+// 国密系列
+const { sm2, sm3, sm4 } = require('sm-crypto');
+
+class SMCrypto {
+  // SM2 加密
+  static sm2Encrypt(data, publicKey) {
+    return sm2.doEncrypt(data, publicKey);
+  }
+
+  // SM2 解密
+  static sm2Decrypt(encryptedData, privateKey) {
+    return sm2.doDecrypt(encryptedData, privateKey);
+  }
+
+  // SM2 签名
+  static sm2Sign(data, privateKey) {
+    return sm2.doSignature(data, privateKey);
+  }
+
+  // SM2 验签
+  static sm2Verify(data, signature, publicKey) {
+    return sm2.doVerifySignature(data, signature, publicKey);
+  }
+
+  // SM3 哈希
+  static sm3Hash(data) {
+    return sm3(data);
+  }
+
+  // SM4 加密
+  static sm4Encrypt(data, key, options = {}) {
+    return sm4.encrypt(data, key, options);
+  }
+
+  // SM4 解密
+  static sm4Decrypt(encryptedData, key, options = {}) {
+    return sm4.decrypt(encryptedData, key, options);
+  }
+
+  // 生成 SM2 密钥对
+  static generateSM2KeyPair() {
+    return sm2.generateKeyPairHex();
+  }
+}
+
+// 使用示例
+const keyPair = SMCrypto.generateSM2KeyPair();
+const message = '国密算法测试';
+
+// SM2 加解密
+const encrypted = SMCrypto.sm2Encrypt(message, keyPair.publicKey);
+const decrypted = SMCrypto.sm2Decrypt(encrypted, keyPair.privateKey);
+
+// SM3 哈希
+const hash = SMCrypto.sm3Hash(message);
+
+console.log('SM2 加解密结果:', decrypted === message);
+console.log('SM3 哈希:', hash);
 
 
 
